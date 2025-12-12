@@ -1,0 +1,101 @@
+import { getSortedPostsData, getPostData } from '@/lib/posts';
+import { Metadata } from 'next';
+import PostContent from '@/components/PostContent';
+import { Category } from '@/lib/types';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+
+// Keep mapping consistent (could extract to lib/constants.ts)
+const REVERSE_CATEGORY_MAP: Record<Category, string> = {
+  'ソフトウェアエンジニアリング': 'software-engineering',
+  'Readings': 'readings',
+  'Misc': 'misc',
+};
+const CATEGORY_MAP: Record<string, Category> = {
+  'software-engineering': 'ソフトウェアエンジニアリング',
+  'readings': 'Readings',
+  'misc': 'Misc',
+};
+
+export function generateStaticParams() {
+  const posts = getSortedPostsData();
+  return posts.map((post) => ({
+    category: REVERSE_CATEGORY_MAP[post.category],
+    slug: post.slug,
+  }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ category: string; slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPostData(slug);
+
+  if (!post) {
+    return {
+      title: 'Post Not Found',
+    };
+  }
+
+  const title = post.title;
+  const description = post.intro || 'No description available';
+  const images = post.thumbnail ? [post.thumbnail] : [];
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: 'article',
+      publishedTime: post.date,
+      images,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images,
+    },
+  };
+}
+
+export default async function PostPage({ params }: { params: Promise<{ category: string; slug: string }> }) {
+  const { category, slug } = await params;
+  
+  const post = await getPostData(slug);
+
+  if (!post) {
+    notFound();
+  }
+  
+  // Optional: check if category matches
+  if (REVERSE_CATEGORY_MAP[post.category] !== category) {
+      notFound();
+  }
+
+  // Display Title for breadcrumb/back link
+  const DISPLAY_TITLE: Record<Category, string> = {
+      'ソフトウェアエンジニアリング': 'ソフトウェアエンジニアリング',
+      'Readings': '読んだもの',
+      'Misc': '雑記'
+  };
+
+  return (
+    <article className="py-10">
+      <header className="mb-10">
+        <div className="flex items-center gap-2 mb-4 text-sm">
+            <Link href={`/${category}`} className="font-bold text-gray-500 hover:text-black">
+             {DISPLAY_TITLE[post.category]}
+            </Link>
+            <span className="text-gray-300">/</span>
+            <span className="text-gray-400">{post.date}</span>
+        </div>
+        <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-6">
+            {post.title}
+        </h1>
+      </header>
+      
+      <PostContent content={post.content} />
+
+    </article>
+  );
+}
