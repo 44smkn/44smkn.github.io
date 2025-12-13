@@ -1,30 +1,25 @@
 # 44smkn.github.io
 
-Next.jsで構築された個人ブログサイトです。
+44smknのブログをGitHub Pagesで公開するためのprojectです。
 
-## 概要
+## Overview
 
-このプロジェクトは、マークダウン形式で記事を管理し、静的サイトとしてビルドできるブログシステムです。リンクカード機能や目次の自動生成など、便利な機能を備えています。
+このprojectは、markdown形式で記事を管理し、Static Siteとしてbuildされます。link cardや目次の自動生成などの機能を備えています。
 
-## 技術スタック
+## Tech Stack
 
-- **フレームワーク**: [Next.js](https://nextjs.org) 16.0.7 (App Router)
-- **言語**: TypeScript
-- **スタイリング**: Tailwind CSS 4.x
-- **マークダウン処理**: 
-  - [remark](https://github.com/remarkjs/remark) - マークダウンパーサー
-  - [rehype](https://github.com/rehypejs/rehype) - HTML変換
-  - [remark-link-card](https://github.com/gladevise/remark-link-card) - リンクカード生成
-- **パッケージマネージャー**: pnpm
+- **Framework**: [Next.js](https://nextjs.org)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS 4.x
+- **Markdown processing**: 
+  - [remark](https://github.com/remarkjs/remark) - Markdown parser
+  - [rehype](https://github.com/rehypejs/rehype) - HTML conversion
+  - [remark-link-card](https://github.com/gladevise/remark-link-card) - Link card generation
+- **Package manager**: pnpm
 
-## セットアップ
+## Setup
 
-### 必要な環境
-
-- Node.js 20以上
-- pnpm
-
-### インストール
+### Install
 
 ```bash
 # リポジトリをクローン
@@ -35,7 +30,7 @@ cd 44smkn.github.io
 pnpm install
 ```
 
-### 開発サーバーの起動
+### Run development server
 
 ```bash
 pnpm dev
@@ -43,9 +38,9 @@ pnpm dev
 
 ブラウザで [http://localhost:3000](http://localhost:3000) を開いて確認できます。
 
-## 記事の投稿方法
+## How to create a new post
 
-### 新しい記事を作成
+### Create a new post
 
 `_posts`ディレクトリに新しいマークダウンファイル（`.md`）を作成します。
 
@@ -53,25 +48,25 @@ pnpm dev
 touch _posts/my-new-post.md
 ```
 
-### フロントマター
+### Frontmatter
 
-各記事の先頭には、以下のようなフロントマターを記述します：
+各記事の先頭には、以下のようなfrontmatterを記述します：
 
 ```yaml
 ---
 title: '記事のタイトル'
 date: '2025-12-08'
 category: 'Software Engineering' # または 'Readings', 'Misc'
-intro: '記事の概要（省略可能）'
-thumbnail: 'https://example.com/image.jpg' # サムネイル画像URL（省略可能）
+intro: '記事の概要（optional）'
+thumbnail: 'https://example.com/image.jpg' # サムネイル画像URL（optional）
 ---
 ```
 
 - `intro`を省略した場合、本文の最初の段落が自動的に概要として使用されます。
 
-### 特殊な記法
+### Special syntax
 
-#### リンクカード
+#### link card
 
 URLをカード形式で表示できます：
 
@@ -79,36 +74,30 @@ URLをカード形式で表示できます：
 [https://github.com:card]
 ```
 
-#### 目次の自動生成
+#### contents
 
 記事内に`[:contents]`と記述すると、その位置にh2/h3レベルの見出しから自動生成された目次が表示されます：
 
 ```markdown
 [:contents]
 
-## セクション1
-### サブセクション1-1
+## section1
+### sub-section1-1
 
-## セクション2
+## section2
 ```
 
-## ビルドとデプロイ
+## build and deploy
 
-### 本番ビルド
+### build
 
 ```bash
 pnpm build
 ```
 
-ビルドされたファイルは`out`ディレクトリに出力されます。
+buildされたファイルは`out`ディレクトリに出力されます。
 
-### リント
-
-```bash
-pnpm lint
-```
-
-## プロジェクト構成
+## project structure
 
 ```
 .
@@ -121,8 +110,3 @@ pnpm lint
 │   └── types.ts     # 型定義
 └── public/          # 静的ファイル
 ```
-
-## ライセンス
-
-このプロジェクトは個人ブログとして使用されています。
-
