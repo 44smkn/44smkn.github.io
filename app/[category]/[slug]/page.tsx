@@ -11,11 +11,7 @@ const REVERSE_CATEGORY_MAP: Record<Category, string> = {
   'Readings': 'readings',
   'Misc': 'misc',
 };
-const CATEGORY_MAP: Record<string, Category> = {
-  'software-engineering': 'ソフトウェアエンジニアリング',
-  'readings': 'Readings',
-  'misc': 'Misc',
-};
+
 
 export function generateStaticParams() {
   const posts = getSortedPostsData();
