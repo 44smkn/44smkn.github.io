@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Post } from '@/lib/types';
 import { CATEGORY_DISPLAY_MAP, REVERSE_CATEGORY_SLUG_MAP } from '@/lib/constants';
 
@@ -15,10 +16,12 @@ export default function PostCard({ post }: Props) {
       <Link href={`/${categorySlug}/${post.slug}`} className="block w-full md:w-48 shrink-0">
         {post.thumbnail ? (
           <div className="w-full aspect-video bg-gray-100 relative overflow-hidden rounded-md">
-            <img 
+            <Image 
               src={post.thumbnail} 
               alt={post.title} 
-              className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-300"
+              sizes="(max-width: 768px) 100vw, 192px"
             />
           </div>
         ) : (

@@ -1,4 +1,4 @@
-import { getSortedPostsData, getAllPostSlugs, getPostData } from '@/lib/posts';
+import { getSortedPostsData } from '@/lib/posts';
 import PostCard from '@/components/PostCard';
 import { Category } from '@/lib/types';
 import { notFound } from 'next/navigation';
@@ -11,11 +11,7 @@ const CATEGORY_MAP: Record<string, Category> = {
 };
 
 // Inverse map for generation
-const REVERSE_CATEGORY_MAP: Record<Category, string> = {
-  'ソフトウェアエンジニアリング': 'software-engineering',
-  'Readings': 'readings',
-  'Misc': 'misc',
-};
+
 
 export function generateStaticParams() {
   return Object.keys(CATEGORY_MAP).map((category) => ({
