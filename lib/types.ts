@@ -1,4 +1,4 @@
-export type Category = 'ソフトウェアエンジニアリング' | 'Readings' | 'Misc';
+export type Category = 'Software Engineering' | 'Readings' | 'Misc';
 
 export interface Post {
   slug: string;

@@ -6,7 +6,10 @@ export default async function Home() {
 
   return (
     <div className="py-4">
-      <h2 className="text-2xl font-bold mb-8">Latest Entries</h2>
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold mb-2">Latest Entries</h2>
+        <p className="text-sm text-gray-500">全カテゴリの最新記事一覧</p>
+      </div>
       {allPostsData.length > 0 ? (
         <div className="flex flex-col gap-4">
           {allPostsData.map((post) => (
