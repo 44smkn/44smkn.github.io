@@ -5,7 +5,7 @@ interface Props {
 export default function PostContent({ content }: Props) {
   return (
     <article 
-      className="prose prose-gray max-w-none dark:prose-invert"
+      className="prose prose-gray max-w-none"
       dangerouslySetInnerHTML={{ __html: content }}
     />
   );
