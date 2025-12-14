@@ -4,7 +4,7 @@
 
 ## Overview
 
-このprojectは、markdown形式で記事を管理し、Static Siteとしてbuildされます。link cardや目次の自動生成などの機能を備えています。
+このprojectは、markdown形式で記事を管理し、Static Siteとしてbuildされ、GitHub Pagesで公開されます。link cardや目次の自動生成、OGP/Twitter Cardによるpreview表示などの機能を備えています。
 
 ## Tech Stack
 
