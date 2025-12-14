@@ -22,7 +22,6 @@ export const metadata: Metadata = {
     title: '44smknのブログ',
     description: 'Software Engineering, Readings, and Misc.',
   },
-  icons: '/favicon.ico',
 };
 
 export default function RootLayout({
