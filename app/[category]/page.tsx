@@ -27,7 +27,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
     notFound();
   }
 
-  const allPosts = getSortedPostsData();
+  const allPosts = await getSortedPostsData();
   const categoryPosts = allPosts.filter((post) => post.category === targetCategory);
 
   // Display title mapping

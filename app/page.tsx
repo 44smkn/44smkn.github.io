@@ -1,8 +1,8 @@
 import { getSortedPostsData } from '@/lib/posts';
 import PostCard from '@/components/PostCard';
 
-export default function Home() {
-  const allPostsData = getSortedPostsData();
+export default async function Home() {
+  const allPostsData = await getSortedPostsData();
 
   return (
     <div className="py-4">

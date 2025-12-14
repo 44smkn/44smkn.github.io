@@ -13,8 +13,8 @@ const REVERSE_CATEGORY_MAP: Record<Category, string> = {
 };
 
 
-export function generateStaticParams() {
-  const posts = getSortedPostsData();
+export async function generateStaticParams() {
+  const posts = await getSortedPostsData();
   return posts.map((post) => ({
     category: REVERSE_CATEGORY_MAP[post.category],
     slug: post.slug,
