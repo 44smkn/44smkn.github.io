@@ -2,7 +2,6 @@
 title: '他者と働く'
 date: '2024-12-21'
 category: 'Readings'
-thumbnail: 'https://storage.googleapis.com/studio-cms-assets/projects/JgqeAnL9qk/s-1493x2159_v-frms_webp_26d12a2d-7ce2-49ec-86d0-ffad279d6e98_small.webp'
 ---
 
 ## 概評

@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import * as cheerio from 'cheerio';
 import { Post, Category } from './types';
 
 const postsDirectory = path.join(process.cwd(), '_posts');
@@ -46,14 +47,62 @@ function generateIntroFromContent(content: string): string {
   return intro || 'No description available.';
 }
 
-export function getSortedPostsData(): Post[] {
+// Cache for OG images to avoid redundant fetches during build
+const ogImageCache = new Map<string, string | null>();
+
+async function fetchOgImage(url: string): Promise<string | null> {
+  if (ogImageCache.has(url)) {
+    return ogImageCache.get(url) || null;
+  }
+
+  try {
+    const response = await fetch(url, { headers: { 'User-Agent': 'bot' } });
+    if (!response.ok) {
+      ogImageCache.set(url, null);
+      return null;
+    }
+    const html = await response.text();
+    const $ = cheerio.load(html);
+    const ogImage = $('meta[property="og:image"]').attr('content');
+
+    if (ogImage) {
+      ogImageCache.set(url, ogImage);
+      return ogImage;
+    }
+  } catch (error) {
+    console.error(`Failed to fetch OG image for ${url}:`, error);
+  }
+
+  ogImageCache.set(url, null);
+  return null;
+}
+
+async function resolveThumbnail(frontmatter: { thumbnail?: string }, content: string): Promise<string | undefined> {
+  if (frontmatter.thumbnail) {
+    return frontmatter.thumbnail;
+  }
+
+  // Find first [URL:card]
+  const cardRegex = /\[(https?:\/\/[^\]]+):card\]/;
+  const match = content.match(cardRegex);
+
+  if (match) {
+    const url = match[1];
+    const ogImage = await fetchOgImage(url);
+    if (ogImage) return ogImage;
+  }
+
+  return undefined;
+}
+
+export async function getSortedPostsData(): Promise<Post[]> {
   // Create _posts directory if it doesn't exist (for safety in initial setup)
   if (!fs.existsSync(postsDirectory)) {
     return [];
   }
 
   const fileNames = fs.readdirSync(postsDirectory);
-  const allPostsData = fileNames.map((fileName) => {
+  const allPostsDataPromises = fileNames.map(async (fileName) => {
     // Remove ".md" from file name to get id
     const slug = fileName.replace(/\.md$/, '');
 
@@ -68,14 +117,20 @@ export function getSortedPostsData(): Post[] {
     // Auto-generate intro if not provided
     const intro = frontmatter.intro || generateIntroFromContent(matterResult.content);
 
+    // Resolve thumbnail (explicit or fallback)
+    const thumbnail = await resolveThumbnail(frontmatter, matterResult.content);
+
     // Combine the data with the id
     return {
       slug,
       ...frontmatter,
+      thumbnail,
       intro,
       content: matterResult.content,
     };
   });
+
+  const allPostsData = await Promise.all(allPostsDataPromises);
 
   // Sort posts by date
   return allPostsData.sort((a, b) => {
@@ -101,11 +156,15 @@ export async function getPostData(slug: string): Promise<Post | null> {
   // Auto-generate intro if not provided
   const intro = frontmatter.intro || generateIntroFromContent(matterResult.content);
 
+  // Resolve thumbnail (explicit or fallback)
+  const thumbnail = await resolveThumbnail(frontmatter, matterResult.content);
+
   const contentHtml = await processMarkdown(matterResult.content);
 
   return {
     slug,
     ...frontmatter,
+    thumbnail,
     intro,
     content: contentHtml,
   };

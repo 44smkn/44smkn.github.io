@@ -358,7 +358,7 @@ export async function processMarkdown(content: string): Promise<string> {
     .use(remarkAutoLink)              // 4. Convert bare URLs to Links (so we can protect them)
     .use(remarkPreventAccidentalCards)// 5. Protect other lone links
     .use(remarkTableOfContents)       // 6. Generate table of contents from [:contents]
-    .use(remarkLinkCard, { cache: true, short: true }) // 7. Convert valid Links to Cards
+    .use(remarkLinkCard, { short: true }) // 7. Convert valid Links to Cards
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeStringify, { allowDangerousHtml: true })
     .process(content);
