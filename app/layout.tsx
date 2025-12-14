@@ -30,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja">
+    <html lang="ja" suppressHydrationWarning>
       <head>
         <link href="https://cdn.jsdelivr.net/npm/line-seed-jp/line-seed-jp.css" rel="stylesheet" />
       </head>
