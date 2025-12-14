@@ -1,7 +1,7 @@
 ---
 title: 'Karpenter v1.0 で Expiration が Graceful から Forceful になった'
 date: '2024-11-15'
-category: 'ソフトウェアエンジニアリング'
+category: 'Software Engineering'
 thumbnail: '/thumbnails/karpenter-expiration-forceful.png'
 ---
 

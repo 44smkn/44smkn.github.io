@@ -11,7 +11,7 @@ export default function PostCard({ post }: Props) {
   const categorySlug = REVERSE_CATEGORY_SLUG_MAP[post.category];
 
   return (
-    <div className="group mb-8 flex flex-col md:flex-row gap-6 items-center">
+    <div className="group mb-8 flex flex-col md:flex-row gap-6 items-start">
       {/* Thumbnail */}
       <Link href={`/${categorySlug}/${post.slug}`} className="block w-full md:w-48 shrink-0">
         {post.thumbnail ? (

@@ -10,15 +10,6 @@
   --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #ffffff;
-    /* User requested simple design, keeping light/simple for now or respect system? User said "simple", usually implies light or clean. I'll stick to system but maybe force light if simple means "paper-like". Let's stick to system to be safe but clean up colors */
-    /* Actually for "simple" often standard black on white is best. I will keep dark mode support but valid one */
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
 
 /* Link Card Styles - Compact Design */
 .rlc-container {
@@ -114,34 +105,6 @@
   margin: 0 !important;
 }
 
-/* Dark mode adjustments */
-@media (prefers-color-scheme: dark) {
-  .rlc-container {
-    border-color: #374151;
-    background-color: #1f2937;
-  }
-
-  .rlc-container:hover {
-    border-color: #4b5563;
-    background-color: #374151;
-  }
-
-  .rlc-title {
-    color: #f9fafb;
-  }
-
-  .rlc-description {
-    color: #9ca3af;
-  }
-
-  .rlc-url-container {
-    color: #6b7280;
-  }
-
-  .rlc-image-container {
-    background-color: #374151;
-  }
-}
 
 /* Table of Contents Styles */
 .table-of-contents {
@@ -176,19 +139,4 @@
 .table-of-contents a:hover {
   color: #1f2937;
   text-decoration: underline;
-}
-
-@media (prefers-color-scheme: dark) {
-  .table-of-contents {
-    background-color: #1f2937;
-    border-color: #374151;
-  }
-
-  .table-of-contents a {
-    color: #d1d5db;
-  }
-
-  .table-of-contents a:hover {
-    color: #f9fafb;
-  }
 }

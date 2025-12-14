@@ -5,18 +5,13 @@ import { Category } from '@/lib/types';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-// Keep mapping consistent (could extract to lib/constants.ts)
-const REVERSE_CATEGORY_MAP: Record<Category, string> = {
-  'ソフトウェアエンジニアリング': 'software-engineering',
-  'Readings': 'readings',
-  'Misc': 'misc',
-};
+import { CATEGORY_DISPLAY_MAP, REVERSE_CATEGORY_SLUG_MAP } from '@/lib/constants';
 
 
 export async function generateStaticParams() {
   const posts = await getSortedPostsData();
   return posts.map((post) => ({
-    category: REVERSE_CATEGORY_MAP[post.category],
+    category: REVERSE_CATEGORY_SLUG_MAP[post.category],
     slug: post.slug,
   }));
 }
@@ -64,23 +59,16 @@ export default async function PostPage({ params }: { params: Promise<{ category:
   }
   
   // Optional: check if category matches
-  if (REVERSE_CATEGORY_MAP[post.category] !== category) {
+  if (REVERSE_CATEGORY_SLUG_MAP[post.category] !== category) {
       notFound();
   }
-
-  // Display Title for breadcrumb/back link
-  const DISPLAY_TITLE: Record<Category, string> = {
-      'ソフトウェアエンジニアリング': 'ソフトウェアエンジニアリング',
-      'Readings': '読んだもの',
-      'Misc': '雑記'
-  };
 
   return (
     <article className="py-10">
       <header className="mb-10">
         <div className="flex items-center gap-2 mb-4 text-sm">
             <Link href={`/${category}`} className="font-bold text-gray-500 hover:text-black">
-             {DISPLAY_TITLE[post.category]}
+             {CATEGORY_DISPLAY_MAP[post.category]}
             </Link>
             <span className="text-gray-300">/</span>
             <span className="text-gray-400">{post.date}</span>
