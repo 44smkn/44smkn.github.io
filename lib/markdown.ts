@@ -4,6 +4,7 @@ import remarkGfm from 'remark-gfm';
 import remarkLinkCard from 'remark-link-card';
 import remarkRehype from 'remark-rehype';
 import rehypeStringify from 'rehype-stringify';
+import rehypeHighlight from 'rehype-highlight';
 import { visit } from 'unist-util-visit';
 import { Plugin } from 'unified';
 import { Node, Parent } from 'unist';
@@ -360,6 +361,7 @@ export async function processMarkdown(content: string): Promise<string> {
     .use(remarkTableOfContents)       // 6. Generate table of contents from [:contents]
     .use(remarkLinkCard, { short: true }) // 7. Convert valid Links to Cards
     .use(remarkRehype, { allowDangerousHtml: true })
+    .use(rehypeHighlight)
     .use(rehypeStringify, { allowDangerousHtml: true })
     .process(content);
 
