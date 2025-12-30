@@ -1,35 +1,42 @@
 {
   extends: [
-    "config:recommended",
-    ":semanticCommits",
-    ":rebaseStalePrs",
-    ":labels(dependencies)",
+    'config:recommended',
+    ':semanticCommits',
+    ':rebaseStalePrs',
+    ':labels(dependencies)',
   ],
-
-  timezone: "Asia/Tokyo",
-  automergeStrategy: "merge-commit",
-  prCreation: "immediate",
+  timezone: 'Asia/Tokyo',
+  automergeStrategy: 'merge-commit',
+  prCreation: 'immediate',
   automerge: false,
-
   packageRules: [
     {
-      matchUpdateTypes: ["minor", "patch"],
+      matchUpdateTypes: [
+        'minor',
+        'patch',
+      ],
       automerge: true,
-      automergeType: "pr",
-      requiredStatusChecks: null
+      automergeType: 'pr',
+      ignoreTests: true,
     },
     {
-      matchUpdateTypes: ["major"],
+      matchUpdateTypes: [
+        'major',
+      ],
       automerge: false,
-      labels: ["major-update"],
-      reviewers: ["44smkn"]
-    }
+      labels: [
+        'major-update',
+      ],
+      reviewers: [
+        '44smkn',
+      ],
+    },
   ],
-
-  prHeader: "🤖 Renovate dependency update",
-
+  prHeader: '🤖 Renovate dependency update',
   lockFileMaintenance: {
     enabled: true,
-    schedule: ["before 6am on monday"]
-  }
+    schedule: [
+      'before 6am on monday',
+    ],
+  },
 }
