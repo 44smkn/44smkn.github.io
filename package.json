@@ -42,7 +42,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.0",
-    "keyv": "^5.5.5",
+    "keyv": "^6.0.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
